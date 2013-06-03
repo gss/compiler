@@ -4,6 +4,10 @@ module.exports = ->
     pkg: @file.readJSON 'package.json'
 
     # Build the browser Component
+    component:
+      install:
+        options:
+          action: 'install'
     component_build:
       'gss-compiler':
         output: './browser/'
@@ -49,6 +53,7 @@ module.exports = ->
       all: ['spec/runner.html']
 
   # Grunt plugins used for building
+  @loadNpmTasks 'grunt-component'
   @loadNpmTasks 'grunt-component-build'
   @loadNpmTasks 'grunt-contrib-uglify'
 
@@ -59,6 +64,6 @@ module.exports = ->
   @loadNpmTasks 'grunt-mocha-phantomjs'
   @loadNpmTasks 'grunt-contrib-watch'
 
-  @registerTask 'build', ['component_build', 'uglify']
+  @registerTask 'build', ['component', 'component_build', 'uglify']
   @registerTask 'test', ['jshint', 'build', 'coffee', 'cafemocha', 'mocha_phantomjs']
   @registerTask 'default', ['build']
