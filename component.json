@@ -1,0 +1,15 @@
+{
+  "name": "gss-compiler",
+  "description": "GSS rule compiler",
+  "version": "0.0.1",
+  "scripts": [
+    "lib/gss-compiler.js"
+  ],
+  "dependencies": {
+    "the-grid/preparser": "*",
+    "the-grid/ccss-compiler": "*",
+    "the-grid/vfl-compiler": "*",
+    "the-grid/gtl-compiler": "*"
+  },
+  "main": "lib/gss-compiler.js"
+}
