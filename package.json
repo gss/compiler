@@ -34,5 +34,8 @@
     "gss-preparser": "git://github.com/the-gss/preparser.git",
     "ccss-compiler": "git://github.com/the-gss/ccss-compiler.git",
     "vfl-compiler": "git://github.com/the-gss/vfl-compiler.git"
+  },
+  "bin": {
+    "gss-compiler": "./bin/gss-compiler"
   }
 }
