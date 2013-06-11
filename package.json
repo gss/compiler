@@ -29,5 +29,10 @@
   "scripts": {
     "test": "grunt test"
   },
-  "main": "./lib/gss-compiler"
+  "main": "./lib/gss-compiler",
+  "dependencies": {
+    "gss-preparser": "git://github.com/the-gss/preparser.git",
+    "ccss-compiler": "git://github.com/the-gss/ccss-compiler.git",
+    "vfl-compiler": "git://github.com/the-gss/vfl-compiler.git"
+  }
 }
