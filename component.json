@@ -6,10 +6,9 @@
     "lib/gss-compiler.js"
   ],
   "dependencies": {
-    "the-grid/preparser": "*",
-    "the-grid/ccss-compiler": "*",
-    "the-grid/vfl-compiler": "*",
-    "the-grid/gtl-compiler": "*"
+    "the-gss/preparser": "*",
+    "the-gss/ccss-compiler": "*",
+    "the-gss/vfl-compiler": "*"
   },
   "main": "lib/gss-compiler.js"
 }
