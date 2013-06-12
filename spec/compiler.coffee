@@ -23,6 +23,25 @@ describe 'GSS compiler', ->
         ['eq', ['get', '#button3[width]'], ['get', '#button4[height]']]
       ]
       css: ''
-    it 'should be able to produce correst AST', ->
+    it 'should be able to produce correct AST', ->
+      result = parser.compile statement
+      chai.expect(result).to.eql ast
+
+  describe 'with a statement containing only VFL', ->
+    statement = "@horizontal [#b1][#b2];"
+    ast =
+      selectors: [
+        "#b1"
+        "#b2"
+      ]
+      vars: [
+        ["get", "#b1[right]", "right", ["$id", "b1"]]
+        ["get", "#b2[left]", "left", ["$id", "b2"]]
+      ]
+      constraints: [
+        ["eq", ["get", "#b1[right]"], ["get", "#b2[left]"]]
+      ]
+    result = null
+    it 'should be able to produce correct AST', ->
       result = parser.compile statement
       chai.expect(result).to.eql ast
