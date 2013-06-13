@@ -41,6 +41,7 @@ describe 'GSS compiler', ->
       constraints: [
         ["eq", ["get", "#b1[right]"], ["get", "#b2[left]"]]
       ]
+      css: ''
     result = null
     it 'should be able to produce correct AST', ->
       result = parser.compile statement
