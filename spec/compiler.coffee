@@ -33,10 +33,31 @@ describe 'GSS compiler', ->
       expect(stringify(ast)).to.eql stringify results
       #assert results[0]._uuid? is true, 'has uuid'
       #for key, val of ast
-      # expect(results[0][key]).to.eql val      
+      # expect(results[0][key]).to.eql val
+      
+  describe 'Virtual Elements', ->
+    statement = '"box"[right] == "box2"[left];'
+    ast = [
+      {     
+        type: 'constraint'
+        cssText: '"box"[right] == "box2"[left];'
+        selectors: [
+        ]
+        commands: [
+          ['eq', ['get$','right',['$virtual','box']],['get$','x',['$virtual','box2']]]
+        ]
+      }    
+    ]  
+    it 'should be able to produce correct AST', ->
+      results = parser.compile statement
+      expect(stringify(ast)).to.eql stringify results
+      #assert results[0]._uuid? is true, 'has uuid'
+      #for key, val of ast
+      # expect(results[0][key]).to.eql val   
 
-  describe 'with a statement containing only VFL', ->
+  describe '/ only VFL', ->
     statement = "@horizontal [#b1][#b2];"
+    statement2 = "@h [#b1][#b2];"
     ast = [
       {
         type: 'directive'
@@ -47,13 +68,24 @@ describe 'GSS compiler', ->
           ["eq", ["get$","right",['$id','b1']], ["get$","x",['$id','b2']]]
         ]
       }    
-    ]  
-    it 'should be able to produce correct AST', ->
+    ]
+    ast2 = [
+      {
+        type: 'directive'
+        name: 'h'
+        terms: "[#b1][#b2]"
+        selectors: ["#b1", "#b2"]
+        commands: [
+          ["eq", ["get$","right",['$id','b1']], ["get$","x",['$id','b2']]]
+        ]
+      }    
+    ]
+    it '/ long-form', ->
       results = parser.compile statement
       expect(ast).to.eql results
-      #assert results[0]._uuid? is true, 'has uuid'
-      #for key, val of ast
-      #  expect(results[0][key]).to.eql val
+    it '/ short-form', ->
+      results = parser.compile statement2
+      expect(ast2).to.eql results
       
   describe 'with a statement containing CCSS & VFL', ->
     statement = """

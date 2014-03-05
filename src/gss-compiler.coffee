@@ -40,11 +40,22 @@ parseRules = (rules) ->
       # TODO: move this stuff to plugins
       when 'directive'      
         switch chunk.name
-          when 'horizontal', 'vertical', '-gss-horizontal', '-gss-vertical'
+          when 'horizontal', 'vertical', '-gss-horizontal', '-gss-vertical', 'h', 'v', '-gss-h', '-gss-v'
             try
-              parsed = vfl.parse "@#{chunk.name} #{chunk.terms}"
+              ccssRules = vfl.parse "@#{chunk.name} #{chunk.terms}"
             catch e
-              console.log "VFL Parse Error", e
+              console.log "VFL Parse Error: @#{chunk.name} #{chunk.terms}", e
+            parsed = {
+              selectors:[]
+              commands:[]
+            }
+            for ccssRule in ccssRules
+              try                 
+                subParsed = ccss.parse(ccssRule)
+              catch e
+                console.log "VFL generated CCSS parse Error", e              
+              parsed.selectors = parsed.selectors.concat(subParsed.selectors)
+              parsed.commands = parsed.commands.concat(subParsed.commands)
           
           when 'if','elseif','else'
             if chunk.terms.length > 0
