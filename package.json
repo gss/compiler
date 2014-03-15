@@ -33,7 +33,8 @@
   "dependencies": {
     "gss-preparser": "*",
     "ccss-compiler": "*",
-    "vfl-compiler": "*"
+    "vfl-compiler": "*",
+    "vgl-compiler": "*"
   },
   "bin": {
     "gss-compiler": "./bin/gss-compiler"

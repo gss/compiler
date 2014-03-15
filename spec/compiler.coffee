@@ -122,7 +122,41 @@ describe 'GSS compiler', ->
       #assert results[0]._uuid? is true, 'has uuid'
       #for key, val of ast
       #  expect(results[0][key]).to.eql val
+  
+  
+  
+  
+  describe 'w/ VGL', ->
+    statement = """
+        
+      @grid-template simple "ab";
+      
+    """
     
+    targetCCSS = [
+      '@virtual "simple-a" "simple-b"'
+      '::[simple-md-width] == ::[width] / 2 !require'
+      '::[simple-md-height] == ::[height] !require'
+      '"simple-a"[width] == ::[simple-md-width]'
+      '"simple-b"[width] == ::[simple-md-width]'
+      '"simple-a"[height] == ::[simple-md-height]'
+      '"simple-b"[height] == ::[simple-md-height]'
+      '"simple-a"[right] == "simple-b"[left]'
+      '@h |["simple-a"] in(::)'
+      '@v |["simple-a"] in(::)'
+      '@v |["simple-b"] in(::)'
+      '@h ["simple-b"]| in(::)'
+      '@v ["simple-a"]| in(::)'
+      '@v ["simple-b"]| in(::)'
+    ]
+    
+    it 'should be able to produce correct AST', ->
+      results = parser.compile statement
+      expect(targetCCSS.length).to.eql results[0].commands.length
+      
+      
+      
+  
   describe 'nested w/ conditional', ->
     statement = """
       @horizontal [#b1][#b2];
