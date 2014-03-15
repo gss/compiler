@@ -152,6 +152,10 @@ describe 'GSS compiler', ->
     
     it 'should be able to produce correct AST', ->
       results = parser.compile statement
+      
+      # Due lazy resistance to writing compiled CSS, 
+      # this is a naive, but good-enough test
+      expect(targetCCSS[0]).to.eql results[0]
       expect(targetCCSS.length).to.eql results[0].commands.length
       
       
