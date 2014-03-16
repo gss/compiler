@@ -155,7 +155,7 @@ describe 'GSS compiler', ->
       
       # Due lazy resistance to writing compiled CSS, 
       # this is a naive, but good-enough test
-      expect(targetCCSS[0]).to.eql results[0]
+      expect([ 'virtual', 'simple-a', 'simple-b' ]).to.eql results[0].commands[0]
       expect(targetCCSS.length).to.eql results[0].commands.length
       
       
