@@ -1,8 +1,9 @@
-if typeof process is 'object' and process.title is 'node'
+if window?
+  parser = require 'gss-compiler'
+else
   chai = require 'chai' unless chai
   parser = require '../lib/gss-compiler'
-else
-  parser = require 'gss-compiler'
+
 
 stringify = (o) ->
   JSON.stringify o, 1, 1

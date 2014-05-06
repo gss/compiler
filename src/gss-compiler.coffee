@@ -79,7 +79,7 @@ parseRules = (rules) ->
           when 'if','elseif','else'
             if chunk.terms.length > 0
               try              
-                parsed = ccss.parse "?(" + chunk.terms + ");"
+                parsed = ccss.parse "@cond" + chunk.terms + ";"
               catch e
                 console.log "CCSS conditional parse Error", e
               parsed.clause = parsed.commands[0]
