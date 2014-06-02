@@ -6,7 +6,8 @@ else
 
 
 stringify = (o) ->
-  JSON.stringify o, 1, 1
+  JSON.stringify o, null, 1
+
 assert = chai.assert
 expect = chai.expect
 
