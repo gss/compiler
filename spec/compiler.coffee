@@ -7,6 +7,26 @@ else
 {assert, expect} = chai
 
 
+# Helper function for expecting errors to be thrown when parsing.
+#
+# @param source [String] GSS statements.
+# @param name [String] The name of the expected error.
+# @param [Boolean] Whether the spec should be treated as pending.
+#
+expectError = (source, name, pending) ->
+  itFn = if pending then xit else it
+
+  describe name, ->
+    itFn 'should throw an error', ->
+      exercise = -> parser.compile source
+      expect(exercise).to.throw Error
+
+      try
+        exercise()
+      catch error
+        expect(error.name).to.equal name
+
+
 describe 'GSS compiler', ->
   it 'should provide the compile method', ->
     chai.expect(parser.compile).to.be.a 'function'
