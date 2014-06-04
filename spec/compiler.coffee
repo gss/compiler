@@ -24,7 +24,7 @@ expectError = (source, name, pending) ->
       try
         exercise()
       catch error
-        expect(error.name).to.equal name
+        expect(error.name).to.contain name
 
 
 describe 'GSS compiler', ->
