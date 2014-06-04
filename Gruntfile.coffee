@@ -69,12 +69,10 @@ module.exports = ->
 
   # Grunt plugins used for testing
   @loadNpmTasks 'grunt-cafe-mocha'
-  @loadNpmTasks 'grunt-contrib-jshint'
   @loadNpmTasks 'grunt-contrib-coffee'
   @loadNpmTasks 'grunt-mocha-phantomjs'
   @loadNpmTasks 'grunt-contrib-watch'
 
   @registerTask 'build', ['coffee:src', 'component', 'component_build', 'uglify']
   @registerTask 'test', ['build', 'coffee:spec', 'cafemocha', 'mocha_phantomjs']
-  #@registerTask 'test', ['build', 'jshint', 'cafemocha', 'mocha_phantomjs']
   @registerTask 'default', ['build']
