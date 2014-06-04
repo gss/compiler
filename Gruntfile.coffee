@@ -35,7 +35,7 @@ module.exports = ->
     # BDD tests on Node.js
     cafemocha:
       nodejs:
-        src: ['spec/*.coffee']
+        src: ['spec/**/*.coffee']
 
     # CoffeeScript compilation
     coffee:
@@ -44,7 +44,7 @@ module.exports = ->
           bare: true
         expand: true
         cwd: 'spec'
-        src: ['**.coffee']
+        src: ['**/*.coffee']
         dest: 'spec'
         ext: '.js'
       src:
@@ -52,7 +52,7 @@ module.exports = ->
           bare: true
         expand: true
         cwd: 'src'
-        src: ['**.coffee']
+        src: ['**/*.coffee']
         dest: 'lib'
         ext: '.js'
 
