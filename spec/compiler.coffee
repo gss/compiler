@@ -5,9 +5,6 @@ else
   parser = require '../lib/gss-compiler'
 
 
-stringify = (o) ->
-  JSON.stringify o, null, 1
-
 assert = chai.assert
 expect = chai.expect
 
