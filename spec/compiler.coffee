@@ -17,7 +17,7 @@ expectError = (source, name, pending) ->
   itFn = if pending then xit else it
 
   describe name, ->
-    itFn 'should throw an error', ->
+    itFn "should throw an error named \"#{name}\"", ->
       exercise = -> parser.compile source
       expect(exercise).to.throw Error
 
