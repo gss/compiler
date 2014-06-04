@@ -4,9 +4,8 @@ else
   chai = require 'chai' unless chai
   parser = require '../lib/gss-compiler'
 
+{assert, expect} = chai
 
-assert = chai.assert
-expect = chai.expect
 
 describe 'GSS compiler', ->
   it 'should provide the compile method', ->
