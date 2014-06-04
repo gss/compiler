@@ -4,14 +4,12 @@ module.exports = ->
     pkg: @file.readJSON 'package.json'
 
     # Build the browser Component
-    component:
-      install:
-        options:
-          action: 'install'
-    component_build:
+    componentbuild:
       'gss-compiler':
-        output: './browser/'
-        config: './component.json'
+        options:
+          name: 'gss-compiler'
+        src: '.'
+        dest: 'browser'
         scripts: true
         styles: false
 
@@ -73,6 +71,6 @@ module.exports = ->
   @loadNpmTasks 'grunt-mocha-phantomjs'
   @loadNpmTasks 'grunt-contrib-watch'
 
-  @registerTask 'build', ['coffee:src', 'component', 'component_build', 'uglify']
+  @registerTask 'build', ['coffee:src', 'componentbuild', 'uglify']
   @registerTask 'test', ['build', 'coffee:spec', 'cafemocha', 'mocha_phantomjs']
   @registerTask 'default', ['build']
