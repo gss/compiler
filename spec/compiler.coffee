@@ -300,18 +300,18 @@ describe 'GSS compiler', ->
 
   describe 'Errors', ->
 
-    expectError '', 'Preparse error', true
+    expectError '@', 'Preparse error'
 
-    expectError '', 'VGL parse error', true
+    expectError '@grid-template simple "";', 'VGL parse error'
 
     expectError '', 'VGL generated VFL parse error', true
 
     expectError '', 'VGL generated CCSS parse error', true
 
-    expectError '', 'VFL parse error', true
+    expectError '@h [];', 'VFL parse error'
 
     expectError '', 'VFL generated CCSS parse error', true
 
-    expectError '', 'CCSS conditional parse error', true
+    expectError '@if [target] === 960 {}', 'CCSS conditional parse error'
 
-    expectError '', 'Constraint parse error', true
+    expectError '#box[right] === #box2[left];', 'Constraint parse error'
