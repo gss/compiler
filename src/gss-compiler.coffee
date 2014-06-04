@@ -12,8 +12,9 @@ uuid = () ->
 compile = (gss) ->
   try
     rules = preparser.parse(gss.trim())
-  catch e
-    console.log "Preparse Error", e
+  catch error
+    error.name = 'Preparse error'
+    throw error
   rules = parseRules rules
   return rules
   
@@ -37,8 +38,9 @@ parseRules = (rules) ->
           when 'grid-template', '-gss-grid-template', 'grid-rows', '-gss-rows', 'grid-cols', '-gss-grid-cols'
             try              
               subrules = vgl.parse "@#{chunk.name} #{chunk.terms}"
-            catch e
-              console.log "VGL Parse Error: @#{chunk.name} #{chunk.terms}", e
+            catch error
+              error.name = "VGL parse error: @#{chunk.name} #{chunk.terms}"
+              throw error
             parsed = {
               selectors:[]
               commands:[]
@@ -46,15 +48,17 @@ parseRules = (rules) ->
             for ccssRule in subrules.ccss
               try                 
                 subParsed = ccss.parse(ccssRule)
-              catch e
-                console.log "VGL generated CCSS parse Error", e              
+              catch error
+                error.name = 'VGL generated CCSS parse error'
+                throw error
               parsed.selectors = parsed.selectors.concat(subParsed.selectors)
               parsed.commands = parsed.commands.concat(subParsed.commands)
             for vflRule in subrules.vfl
               try                 
                 subParsed = ccss.parse(vfl.parse(vflRule).join("; "))
-              catch e
-                console.log "VGL generated VFL parse Error", e              
+              catch error
+                error.name = 'VGL generated VFL parse error'
+                throw error
               parsed.selectors = parsed.selectors.concat(subParsed.selectors)
               parsed.commands = parsed.commands.concat(subParsed.commands)
             #console.log "!!!!!", parsed
@@ -62,8 +66,9 @@ parseRules = (rules) ->
           when 'horizontal', 'vertical', '-gss-horizontal', '-gss-vertical', 'h', 'v', '-gss-h', '-gss-v'
             try
               ccssRules = vfl.parse "@#{chunk.name} #{chunk.terms}"
-            catch e
-              console.log "VFL Parse Error: @#{chunk.name} #{chunk.terms}", e
+            catch error
+              error.name = "VFL parse error: @#{chunk.name} #{chunk.terms}"
+              throw error
             parsed = {
               selectors:[]
               commands:[]
@@ -71,8 +76,9 @@ parseRules = (rules) ->
             for ccssRule in ccssRules
               try                 
                 subParsed = ccss.parse(ccssRule)
-              catch e
-                console.log "VFL generated CCSS parse Error", e              
+              catch error
+                error.name = 'VFL generated CCSS parse error'
+                throw error
               parsed.selectors = parsed.selectors.concat(subParsed.selectors)
               parsed.commands = parsed.commands.concat(subParsed.commands)
           
@@ -80,8 +86,9 @@ parseRules = (rules) ->
             if chunk.terms.length > 0
               try              
                 parsed = ccss.parse "@cond" + chunk.terms + ";"
-              catch e
-                console.log "CCSS conditional parse Error", e
+              catch error
+                error.name = 'CCSS conditional parse error'
+                throw error
               parsed.clause = parsed.commands[0]
               delete parsed.commands
             else
@@ -91,8 +98,9 @@ parseRules = (rules) ->
       when 'constraint'
         try
           parsed = ccss.parse chunk.cssText
-        catch e
-          console.log "Constraint Parse Error", e
+        catch error
+          error.name = 'Constraint parse error'
+          throw error
       
       # 
       #when 'style'
