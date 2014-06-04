@@ -296,3 +296,22 @@ describe 'GSS compiler', ->
       #assert results[0]._uuid? is true, 'has uuid'
       #for key, val of ast
       #  expect(results[0][key]).to.eql val
+
+
+  describe 'Errors', ->
+
+    expectError '', 'Preparse error', true
+
+    expectError '', 'VGL parse error', true
+
+    expectError '', 'VGL generated VFL parse error', true
+
+    expectError '', 'VGL generated CCSS parse error', true
+
+    expectError '', 'VFL parse error', true
+
+    expectError '', 'VFL generated CCSS parse error', true
+
+    expectError '', 'CCSS conditional parse error', true
+
+    expectError '', 'Constraint parse error', true
