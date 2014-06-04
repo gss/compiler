@@ -5,8 +5,6 @@ else
   parser = require '../lib/gss-compiler'
 
 
-stringify = (o) ->
-  JSON.stringify o, 1, 1
 assert = chai.assert
 expect = chai.expect
 
@@ -31,7 +29,7 @@ describe 'GSS compiler', ->
     ]  
     it 'should be able to produce correct AST', ->
       results = parser.compile statement
-      expect(stringify(ast)).to.eql stringify results
+      expect(ast).to.deep.equal results
       #assert results[0]._uuid? is true, 'has uuid'
       #for key, val of ast
       # expect(results[0][key]).to.eql val
@@ -51,7 +49,7 @@ describe 'GSS compiler', ->
     ]  
     it 'should be able to produce correct AST', ->
       results = parser.compile statement
-      expect(stringify(ast)).to.eql stringify results
+      expect(ast).to.deep.equal results
       #assert results[0]._uuid? is true, 'has uuid'
       #for key, val of ast
       # expect(results[0][key]).to.eql val   
@@ -83,10 +81,10 @@ describe 'GSS compiler', ->
     ]
     it '/ long-form', ->
       results = parser.compile statement
-      expect(ast).to.eql results
+      expect(ast).to.deep.equal results
     it '/ short-form', ->
       results = parser.compile statement2
-      expect(ast2).to.eql results
+      expect(ast2).to.deep.equal results
       
   describe 'with a statement containing CCSS & VFL', ->
     statement = """
@@ -119,7 +117,7 @@ describe 'GSS compiler', ->
     ]  
     it 'should be able to produce correct AST', ->
       results = parser.compile statement
-      expect(ast).to.eql results
+      expect(ast).to.deep.equal results
       #assert results[0]._uuid? is true, 'has uuid'
       #for key, val of ast
       #  expect(results[0][key]).to.eql val
@@ -275,7 +273,7 @@ describe 'GSS compiler', ->
     ]  
     it 'should be able to produce correct AST', ->
       results = parser.compile statement
-      expect(ast).to.eql results
+      expect(ast).to.deep.equal results
       #assert results[0]._uuid? is true, 'has uuid'
       #for key, val of ast
       #  expect(results[0][key]).to.eql val
