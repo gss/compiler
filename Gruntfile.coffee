@@ -61,7 +61,6 @@ module.exports = ->
       all: ['spec/runner.html']
 
   # Grunt plugins used for building
-  @loadNpmTasks 'grunt-component'
   @loadNpmTasks 'grunt-component-build'
   @loadNpmTasks 'grunt-contrib-uglify'
 
