@@ -9,17 +9,24 @@ else
 
 # Helper function for expecting errors to be thrown when parsing.
 #
-# @param source [String] GSS statements.
-# @param name [String] The name of the expected error.
-# @param [Boolean] Whether the spec should be treated as pending.
+# @param options [Object]
+# @option options source [String] GSS statements.
+# @option options name [String] The name of the expected error.
+# @option options before [Function] Called before the spec runs.
+# @option options after [Function] Called after the spec runs.
+# @option options pending [Boolean] Whether the spec should be treated as
+# pending.
 #
-expectError = (source, name, pending) ->
+expectError = (options) ->
+  {after, before, name, pending, source} = options
   itFn = if pending then xit else it
 
   describe name, ->
     itFn "should throw an error named \"#{name}\"", ->
+      before?()
       exercise = -> parser.compile source
       expect(exercise).to.throw Error
+      after?()
 
       # Chai doesn't provide a way to verify an error's name,
       # so do it manually.
@@ -302,18 +309,36 @@ describe 'GSS compiler', ->
 
   describe 'Errors', ->
 
-    expectError '@', 'Preparse error'
+    expectError
+      name: 'Preparse error'
+      source: '@'
 
-    expectError '@grid-template simple "";', 'VGL parse error'
+    expectError
+      name: 'VGL parse error'
+      source: '@grid-template simple "";'
 
-    expectError '', 'VGL generated VFL parse error', true
+    expectError
+      name: 'VGL generated VFL parse error'
+      source: ''
+      pending: true
 
-    expectError '', 'VGL generated CCSS parse error', true
+    expectError
+      name: 'VGL generated CCSS parse error'
+      source: ''
+      pending: true
 
-    expectError '@h [];', 'VFL parse error'
+    expectError
+      name: 'VFL parse error'
+      source: '@h [];'
 
-    expectError '@h |-[#box]-| !requirre;', 'VFL generated CCSS parse error'
+    expectError
+      name: 'VFL generated CCSS parse error'
+      source: '@h |-[#box]-| !requirre;'
 
-    expectError '@if [target] === 960 {}', 'CCSS conditional parse error'
+    expectError
+      name: 'CCSS conditional parse error'
+      source: '@if [target] === 960 {}'
 
-    expectError '#box[right] === #box2[left];', 'Constraint parse error'
+    expectError
+      name: 'Constraint parse error'
+      source: '#box[right] === #box2[left];'
