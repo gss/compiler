@@ -4,14 +4,12 @@ module.exports = ->
     pkg: @file.readJSON 'package.json'
 
     # Build the browser Component
-    component:
-      install:
-        options:
-          action: 'install'
-    component_build:
+    componentbuild:
       'gss-compiler':
-        output: './browser/'
-        config: './component.json'
+        options:
+          name: 'gss-compiler'
+        src: '.'
+        dest: 'browser'
         scripts: true
         styles: false
 
@@ -19,7 +17,7 @@ module.exports = ->
     uglify:
       options:
         report: 'min'
-      noflo:
+      'gss-compiler':
         files:
           './browser/gss-compiler.min.js': ['./browser/gss-compiler.js']
 
@@ -35,7 +33,9 @@ module.exports = ->
     # BDD tests on Node.js
     cafemocha:
       nodejs:
-        src: ['spec/*.coffee']
+        src: ['spec/**/*.coffee']
+      options:
+        reporter: 'spec'
 
     # CoffeeScript compilation
     coffee:
@@ -44,7 +44,7 @@ module.exports = ->
           bare: true
         expand: true
         cwd: 'spec'
-        src: ['**.coffee']
+        src: ['**/*.coffee']
         dest: 'spec'
         ext: '.js'
       src:
@@ -52,7 +52,7 @@ module.exports = ->
           bare: true
         expand: true
         cwd: 'src'
-        src: ['**.coffee']
+        src: ['**/*.coffee']
         dest: 'lib'
         ext: '.js'
 
@@ -61,18 +61,15 @@ module.exports = ->
       all: ['spec/runner.html']
 
   # Grunt plugins used for building
-  @loadNpmTasks 'grunt-component'
   @loadNpmTasks 'grunt-component-build'
   @loadNpmTasks 'grunt-contrib-uglify'
 
   # Grunt plugins used for testing
   @loadNpmTasks 'grunt-cafe-mocha'
-  @loadNpmTasks 'grunt-contrib-jshint'
   @loadNpmTasks 'grunt-contrib-coffee'
   @loadNpmTasks 'grunt-mocha-phantomjs'
   @loadNpmTasks 'grunt-contrib-watch'
 
-  @registerTask 'build', ['coffee', 'component', 'component_build', 'uglify']
-  @registerTask 'test', ['build', 'cafemocha', 'mocha_phantomjs']
-  #@registerTask 'test', ['build', 'jshint', 'cafemocha', 'mocha_phantomjs']
+  @registerTask 'build', ['coffee:src', 'componentbuild', 'uglify']
+  @registerTask 'test', ['build', 'coffee:spec', 'cafemocha', 'mocha_phantomjs']
   @registerTask 'default', ['build']
