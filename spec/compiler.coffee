@@ -21,6 +21,8 @@ expectError = (source, name, pending) ->
       exercise = -> parser.compile source
       expect(exercise).to.throw Error
 
+      # Chai doesn't provide a way to verify an error's name,
+      # so do it manually.
       try
         exercise()
       catch error
