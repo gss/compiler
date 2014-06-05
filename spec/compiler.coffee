@@ -310,7 +310,7 @@ describe 'GSS compiler', ->
 
     expectError '@h [];', 'VFL parse error'
 
-    expectError '', 'VFL generated CCSS parse error', true
+    expectError '@h |-[#box]-| !requirre;', 'VFL generated CCSS parse error'
 
     expectError '@if [target] === 960 {}', 'CCSS conditional parse error'
 
