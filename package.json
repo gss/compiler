@@ -22,7 +22,8 @@
     "grunt-mocha-phantomjs": "~0.2.8",
     "grunt-contrib-uglify": "~0.2.1",
     "grunt-contrib-coffee": "~0.7.0",
-    "grunt-cli": "~0.1.13"
+    "grunt-cli": "~0.1.13",
+    "sinon": "~1.10.2"
   },
   "keywords": [],
   "scripts": {
